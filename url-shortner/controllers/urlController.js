@@ -1,0 +1,57 @@
+import Url from '../models/urlModel.js';
+import { nanoid } from 'nanoid';
+
+async function handleGenerateShortUrl(req, res) {
+    console.log('Inside handleGenerateShortUrl');
+    try {
+        const shortId = nanoid(8); // Generate a unique short ID
+        if (!req.body || !req.body.redirectUrl) {
+            return res.status(400).json({ error: 'redirectUrl is required' });
+        }
+        await Url.create({
+            shortId,
+            redirectUrl: req.body.redirectUrl,
+            visitHistory: [],
+        });
+        res.json({ shortId });  
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+async function handleGetPerticularUrl(req, res) {
+    try {
+        const { shortId } = req.params;
+        const entry = await Url.findOneAndUpdate(
+            { shortId },
+            { $push: { visitHistory: { visitTime: Date.now() } } },
+            { returnDocument: 'after' }
+        );
+        res.redirect(entry.redirectUrl);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+async function handleGetAnalytics(req, res) {
+    try {
+        const { shortId } = req.params;
+        const entry = await Url.findOne({ shortId });
+        console.log(entry);
+        if (!entry) {
+            return res.status(404).json({ error: 'URL not found' });
+        }
+
+        res.json({
+            totalVisits: entry.visitHistory.length,
+            visitTimestamps: entry.visitHistory.map(visit => visit.visitTime ),
+        });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }   
+}
+
+export { handleGenerateShortUrl, handleGetPerticularUrl, handleGetAnalytics };
