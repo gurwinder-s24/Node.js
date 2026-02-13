@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All URLs</h1>
+    <ul>
+        <!-- list of urls -->
+            <% urls.forEach(url => { %>
+                <li>
+                    <p>
+                        <%= url.shortId %> : <%= url.redirectUrl %>
+                    </p>
+                    <p>
+                        Link to visit: <a href="./<%= url.shortId %>" target="_blank">click here</a>
+                    </p>
+                </li>
+                <br>
+            <% }) %>
+    </ul>
+
+</body>
+</html>

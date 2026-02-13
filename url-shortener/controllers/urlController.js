@@ -13,7 +13,11 @@ async function handleGenerateShortUrl(req, res) {
             redirectUrl: req.body.redirectUrl,
             visitHistory: [],
         });
-        res.json({ shortId });  
+        // res.json({ shortId });  
+        res.render('home', {
+             shortId,
+             baseUrl: `${req.protocol}://${req.get('host')}`,
+        });
     }
     catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
@@ -54,4 +58,14 @@ async function handleGetAnalytics(req, res) {
     }   
 }
 
-export { handleGenerateShortUrl, handleGetPerticularUrl, handleGetAnalytics };
+async function handleGetAllUrls(req, res, viewName = 'test') {
+    try {
+        const allUrls = await Url.find({});
+        res.render(viewName, { urls: allUrls });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export { handleGenerateShortUrl, handleGetPerticularUrl, handleGetAnalytics, handleGetAllUrls };

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>url-shortener</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body class="bg-black text-white font-['Segoe UI', Tahoma, Geneva, Verdana, sans-serif]">
+    <div class="flex flex-col items-center gap-8 mt-16">
+        <h1 class="text-4xl font-bold">
+            URL Shortener
+        </h1>
+
+        <div>
+            <% if (locals.shortId) { %>
+                <p> Url Generated:
+                    <a href="/<%= shortId %>" target="_blank">
+                        <%= baseUrl %>/<%= shortId %>
+                    </a> 
+                </p>
+            <% } %>
+            <form class="flex gap-4" method="POST" action="/api/url">
+                <label for="redirectUrl">Enter your original URL</label>
+                <input class="border border-white rounded-sm px-4" type="text" name="redirectUrl" placeholder="https://example.com">
+                <!-- keep names of input fields consistent with backend, eg: redirectUrl in handleGenerateUrl controller -->
+                <button type="submit" class="border-2 border-white px-2">Generate</button>
+            </form>
+        </div>
+
+        <div>
+            <% if (locals.urls) { %>
+                <table class="w-full border-collapse">
+                    <thead class="text-white">
+                        <th> S. No </th>
+                        <th> Short Id </th>
+                        <th> Redirect </th>
+                        <th> Clicks </th>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url, index) => { %>
+                            <tr>
+                                <td class="pr-6"><%= index + 1 %></td>
+                                <td class="pr-6"><%= url.shortId %></td>
+                                <td class="pr-6"><%= url.redirectUrl %></td>
+                                <td class="pr-6"><%= url.visitHistory.length %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
