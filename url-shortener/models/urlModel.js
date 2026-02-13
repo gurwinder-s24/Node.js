@@ -5,7 +5,8 @@ const urlSchema = new Schema({
     redirectUrl: { type: String, required: true },
     visitHistory: [
         { visitTime: { type: Number } }
-    ]
+    ],
+    createdBy: { type: Schema.Types.ObjectId, ref: 'users' },
 }, { timestamps: true });
 
 const urlModel = model('url', urlSchema);

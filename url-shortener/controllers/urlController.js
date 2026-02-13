@@ -2,7 +2,6 @@ import Url from '../models/urlModel.js';
 import { nanoid } from 'nanoid';
 
 async function handleGenerateShortUrl(req, res) {
-    console.log('Inside handleGenerateShortUrl');
     try {
         const shortId = nanoid(8); // Generate a unique short ID
         if (!req.body || !req.body.redirectUrl) {
@@ -12,6 +11,7 @@ async function handleGenerateShortUrl(req, res) {
             shortId,
             redirectUrl: req.body.redirectUrl,
             visitHistory: [],
+            createdBy: req.user._id, // Assuming req.user is set by auth middleware
         });
         // res.json({ shortId });  
         res.render('home', {
@@ -60,7 +60,10 @@ async function handleGetAnalytics(req, res) {
 
 async function handleGetAllUrls(req, res, viewName = 'test') {
     try {
-        const allUrls = await Url.find({});
+        if (!req.user) {
+            return res.status(401).redirect('/login');
+        }
+        const allUrls = await Url.find({ createdBy: req.user._id });
         res.render(viewName, { urls: allUrls });
     }
     catch (error) {
