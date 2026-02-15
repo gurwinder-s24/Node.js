@@ -14,3 +14,13 @@
 - MongoDB
 - Mongoose
 - EJS templating engine
+
+
+## Mini-Projects and navigation links to their codes
+
+
+
+* URL shortener [&#x1F517;](./url-shortener/) <br>
+  - A simple URL shortener service that allows users to create shortened URLs and redirect to the original URLs.
+  - Features include custom short URL creation, and analytics for tracking URL usage, different views for admin and normal users.
+
