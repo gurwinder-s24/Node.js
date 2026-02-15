@@ -1,14 +1,5 @@
 This file is created for reference to versioning
-It will contain info related to the latest commint
+It will contain info related to the latest commit
 
 // In this commit
-- Added basic stateful authentication using uuid and cookies
-- Added a simple login page, signup page
-
-// Problem of Stateful Authentication
-- It logout the user when the server restarts, 
-    or we can say when we reload the page, because
-    the sessionId on server-side is lost as it was stored in memory,
-    and the sessionId stored in cookie on client-side is still there, 
-    so it will not match with any sessionId on server-side, 
-    and it will logout the user.
+- Replaced stateful auth with stateless auth using json web tokens (JWT)

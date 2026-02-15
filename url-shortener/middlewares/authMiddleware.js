@@ -1,12 +1,12 @@
-import { getUserBySessionId } from '../services/auth.js'; 
+import { getUserByToken } from '../services/auth.js'; 
 
 
 async function restrictToAuthenticatedUsersOnly(req, res, next) {
     try {
-        const sessionId = req.cookies?.sessionId;
-        if (!sessionId) return res.status(401).redirect('/login');
+        const token = req.cookies?.token;
+        if (!token) return res.status(401).redirect('/login');
 
-        const existingUser = await getUserBySessionId(sessionId);
+        const existingUser = await getUserByToken(token);
         if (!existingUser) return res.status(401).redirect('/login');
         
         req.user = existingUser; // Attach user information to the request object
@@ -19,8 +19,8 @@ async function restrictToAuthenticatedUsersOnly(req, res, next) {
 
 async function checkAuth(req, res, next) {
     try {
-        const sessionId = req.cookies?.sessionId;
-        const existingUser = await getUserBySessionId(sessionId);
+        const token = req.cookies?.token;
+        const existingUser = await getUserByToken(token);
         req.user = existingUser;
         next();
     }

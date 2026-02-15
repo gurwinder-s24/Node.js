@@ -1,6 +1,6 @@
 import User from '../models/userModel.js';
 import { v4 as uuidv4 } from 'uuid';
-import { createSession } from '../services/auth.js';
+import { createToken } from '../services/auth.js';
 import { response } from 'express';
 
 async function handleUserSignup(req, res) {
@@ -34,9 +34,8 @@ async function handleUserLogin(req, res) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
         
-        const sessionId = uuidv4();
-        createSession(sessionId, existingUser);
-        res.cookie('sessionId', sessionId);
+        const token = createToken(existingUser);
+        res.cookie('token', token);
         res.status(200).redirect('/'); // Redirect to home page after successful login
     }
     catch (error) {
