@@ -35,7 +35,8 @@ async function handleUserLogin(req, res) {
         }
         
         const token = createToken(existingUser);
-        res.cookie('token', token);
+        // res.cookie('token', token);
+        res.json({ token }); // Send the token in the response body
         res.status(200).redirect('/'); // Redirect to home page after successful login
     }
     catch (error) {

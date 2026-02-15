@@ -3,3 +3,7 @@ It will contain info related to the latest commit
 
 // In this commit
 - Replaced stateful auth with stateless auth using json web tokens (JWT)
+- changed the way token is stored and sent in requests
+    now user/frontend will receive a token in response and it is 
+    user's responsibility to store it and send it in subsequent
+    requests in the Authorization header as a Bearer token.

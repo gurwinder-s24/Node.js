@@ -9,11 +9,17 @@ function createToken(user) {
     return token;
 }
 
-function getUserByToken(token) {
+function getUserDetailsByToken(token) {
     if (!token) return null;
     const decoded = jwt.verify(token, secretKey);
     return decoded;
 }
 
 
-export { createToken, getUserByToken };
+export { createToken, getUserDetailsByToken };
+
+// we changed userBySessionId to userDetailsByToken
+// instead of userByToken, because this time we are not attaching the 
+// entire user object to the token, but only the user details that
+// we need to identify the user, which are _id and email.
+// ( basically we are not attaching the password to the token) 
