@@ -4,7 +4,7 @@ dotenv.config();
 const secretKey = process.env.JWT_SECRET_KEY;
 
 function createToken(user) {
-    const payload = { _id: user._id, email: user.email };
+    const payload = { _id: user._id, email: user.email, role: user.role };
     const token = jwt.sign(payload, secretKey);
     return token;
 }

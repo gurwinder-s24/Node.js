@@ -13,11 +13,11 @@ async function handleGenerateShortUrl(req, res) {
             visitHistory: [],
             createdBy: req.user._id, // Assuming req.user is set by auth middleware
         });
-        // res.json({ shortId });  
         res.render('home', {
-             shortId,
-             baseUrl: `${req.protocol}://${req.get('host')}`,
+            shortId,
+            baseUrl: `${req.protocol}://${req.get('host')}`,
         });
+        // res.json({ shortId }); // For API response
     }
     catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
@@ -58,12 +58,13 @@ async function handleGetAnalytics(req, res) {
     }   
 }
 
-async function handleGetAllUrls(req, res, viewName = 'test') {
+async function handleGetAllUrls(req, res, viewName = 'test', isAdminRoute = false) {
     try {
-        if (!req.user) {
-            return res.status(401).redirect('/login');
+        if (!isAdminRoute) {
+            const allUrls = await Url.find({ createdBy: req.user._id });
+            return res.render(viewName, { urls: allUrls });
         }
-        const allUrls = await Url.find({ createdBy: req.user._id });
+        const allUrls = await Url.find({});
         res.render(viewName, { urls: allUrls });
     }
     catch (error) {

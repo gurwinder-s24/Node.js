@@ -1,35 +1,48 @@
 import { getUserDetailsByToken } from '../services/auth.js'; 
 
-
-async function restrictToAuthenticatedUsersOnly(req, res, next) {
-    try {
-        // const token = req.cookies?.token;
-        const token = req.headers?.["authorization"]?.split('Bearer ')[1];
-        if (!token) return res.status(401).redirect('/login');
-
-        const existingUserDetails = await getUserDetailsByToken(token);
-        if (!existingUserDetails) return res.status(401).redirect('/login');
-        
-        req.user = existingUserDetails; // Attach user information to the request object
-        next();
+// Authentication
+function checkForAuthentication(req, res, next) {
+    req.user = null;
+    const tokenCookie = req.cookies?.token;
+    if (!tokenCookie) {
+        return next();
     }
-    catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+    const token = tokenCookie;
+    const existingUserDetails = getUserDetailsByToken(token);
+    req.user = existingUserDetails;
+    next();
+}
+
+// Authorization
+function restrictTo(roles) {
+    return function (req, res, next) {
+        if (!req.user){
+            return res.redirect('/login');
+        }
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ error: 'Forbidden' });
+        }
+
+        next();
     }
 }
 
-async function checkAuth(req, res, next) {
-    try {
-        // const token = req.cookies?.token;
-        const token = req.headers?.["authorization"]?.split('Bearer ')[1];
-        const existingUserDetails = await getUserDetailsByToken(token);
-        req.user = existingUserDetails;
-        next();
-    }
-    catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
+export { checkForAuthentication, restrictTo };
 
 
-export { restrictToAuthenticatedUsersOnly, checkAuth };
+
+
+
+// Alternative implementation using Authorization header instead of cookies
+
+// function checkForAuthentication(req, res, next) {
+//     req.user = null;
+//     const authorizationHeaderValue = req.headers?.["authorization"];
+//     if (!authorizationHeaderValue || !authorizationHeaderValue.startsWith('Bearer ')) {
+//         return next();
+//     }
+//     const token = authorizationHeaderValue.split('Bearer ')[1];
+//     const existingUserDetails = getUserDetailsByToken(token);
+//     req.user = existingUserDetails;
+//     next();
+// }

@@ -11,7 +11,7 @@ import testRoutes from './routes/testRouter.js';
 import appRoutes from './routes/appRouter.js';  
 // Importing middlewares
 import notFoundHandler from './middlewares/notFound.js';
-import { restrictToAuthenticatedUsersOnly, checkAuth} from './middlewares/authMiddleware.js';
+import { checkForAuthentication, restrictTo } from './middlewares/authMiddleware.js';
 
 
 // 1. Load environment variables
@@ -30,16 +30,18 @@ async function startServer() {
   app.use(express.json()); // for parsing application/json
   app.use(express.urlencoded({ extended: false })); // for parsing form data (if any)
   app.use(cookieParser()); // for parsing cookies (if any)
+  // 4.o Custom middlewares
+  app.use(checkForAuthentication);
 
   // 5. Static files // for serving static files like css, js, images etc. (if any)
   app.use(express.static(path.resolve('./public')));
 
   // 6. Routes
-  app.use('/api/url', restrictToAuthenticatedUsersOnly, urlRoutes );
+  app.use('/api/url', restrictTo(["NORMAL"]), urlRoutes );
   app.use('/user', userRoutes );
   app.use('/analytics', analyticsRoute );
   app.use('/test', testRoutes );
-  app.use('/', checkAuth, appRoutes );
+  app.use('/', appRoutes );
   app.use(notFoundHandler);
 
   // 7. Start the server
