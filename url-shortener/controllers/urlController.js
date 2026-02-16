@@ -24,7 +24,7 @@ async function handleGenerateShortUrl(req, res) {
     }
 }
 
-async function handleGetPerticularUrl(req, res) {
+async function handleGetPerticularUrl(req, res, next) {
     try {
         const { shortId } = req.params;
         const entry = await Url.findOneAndUpdate(
@@ -32,6 +32,7 @@ async function handleGetPerticularUrl(req, res) {
             { $push: { visitHistory: { visitTime: Date.now() } } },
             { returnDocument: 'after' }
         );
+        if (!entry) { return next(); } // Let the next middleware handle 404
         res.redirect(entry.redirectUrl);
     }
     catch (error) {

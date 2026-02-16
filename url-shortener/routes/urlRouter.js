@@ -5,6 +5,6 @@ import { handleGenerateShortUrl } from '../controllers/urlController.js';
 
 const router = express.Router();
 router.post('/', handleGenerateShortUrl);
-router.use(methodNotAllowed());
+// router.use(methodNotAllowed());
 
 export default router;

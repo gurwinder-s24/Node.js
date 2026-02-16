@@ -12,6 +12,6 @@ router.get('/signup', (req, res) => res.render('signup'));
 router.get('/login', (req, res) => res.render('login'));
 // dynamic route for redirecting short url to long url
 router.get('/:shortId', handleGetPerticularUrl);
-router.use(methodNotAllowed());
+// router.use(methodNotAllowed());
 
 export default router;

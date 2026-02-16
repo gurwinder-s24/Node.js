@@ -5,6 +5,6 @@ import { handleGetAllUrls } from '../controllers/urlController.js';
 
 const router = express.Router();
 router.get('/', (req, res) => handleGetAllUrls(req, res, 'test'));
-router.use(methodNotAllowed());
+// router.use(methodNotAllowed());
 
 export default router;

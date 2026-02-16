@@ -42,7 +42,7 @@ async function startServer() {
   app.use('/analytics', analyticsRoute );
   app.use('/test', testRoutes );
   app.use('/', appRoutes );
-  app.use(notFoundHandler);
+  // app.use(notFoundHandler);
 
   // 7. Start the server
   const port = process.env.PORT;

@@ -5,6 +5,6 @@ import { handleGetAnalytics } from '../controllers/urlController.js';
 
 const router = express.Router();
 router.get('/:shortId', handleGetAnalytics);
-router.use(methodNotAllowed());
+// router.use(methodNotAllowed());
 
 export default router;

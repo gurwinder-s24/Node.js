@@ -6,6 +6,6 @@ import { handleUserSignup, handleUserLogin } from '../controllers/userController
 const router = express.Router();
 router.post('/signup', handleUserSignup);
 router.post('/login', handleUserLogin);
-router.use(methodNotAllowed());
+// router.use(methodNotAllowed());
 
 export default router;
