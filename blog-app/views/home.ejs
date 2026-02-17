@@ -2,11 +2,45 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Homepage</title>
 </head>
 <body>
     <%- include('./partials/navbar') %>
+
+    <div class="max-w-7xl mx-auto mt-8 px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <% blogs.forEach(blog => { %>
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                
+                <div class="aspect-video w-full overflow-hidden bg-gray-100">
+                <img 
+                    src="<%= blog.coverImageURL %>"
+                    alt="<%= blog.title %>"
+                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                />
+                </div>
+
+                <div class="p-5 flex flex-col flex-grow">
+                <h5 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                    <%= blog.title %>
+                </h5>
+                
+                <div class="mt-auto">
+                    <a 
+                    href="/blog/<%= blog._id %>" 
+                    class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                    >
+                    View Post
+                    </a>
+                </div>
+                </div>
+
+            </div>
+            <% }) %>
+
+        </div>
+    </div>
 
     <%- include('./partials/scripts') %>
 </body>

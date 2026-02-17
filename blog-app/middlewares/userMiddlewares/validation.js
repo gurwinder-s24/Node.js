@@ -15,9 +15,10 @@ const matchCredentialsAndReturnUserInfo = async function(email, password) {
         return null;
     }
     const userInfo = {
-        id: existingUser._id,
+        _id: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
+        profileImageURL: existingUser.profileImageURL,
         role: existingUser.role
     };
     return userInfo;

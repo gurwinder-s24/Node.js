@@ -5,7 +5,8 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 function createToken(userInfo) {
     const payload = { 
-        _id: userInfo._id, 
+        _id: userInfo._id,
+        name: userInfo.name,
         email: userInfo.email, 
         role: userInfo.role 
     };
@@ -15,8 +16,8 @@ function createToken(userInfo) {
 
 function getUserDetailsByToken(token) {
     if (!token) return null;
-    const decoded = jwt.verify(token, secretKey);
-    return decoded;
+    const decodedPayload = jwt.verify(token, secretKey);
+    return decodedPayload;
 }
 
 

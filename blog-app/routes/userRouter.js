@@ -15,6 +15,9 @@ router.route('/signin')
     })
     .post( handleUserSignin );
 
-
+router.route('/signout')
+    .get((req, res) => {
+        res.clearCookie('token').redirect('/');
+    });
 
 export default router;

@@ -30,9 +30,10 @@ async function handleUserSignin(req, res) {
 
         const userInfo = await User.matchCredentialsAndReturnUserInfo(email, password);
         if (!userInfo) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            // return res.status(401).json({ error: 'Invalid email or password' });
+            return res.render('signin', { error: 'Invalid email or password' });
         }
-
+        
         const token = createToken(userInfo);
         res.cookie('token', token).status(200).redirect('/');
         // res.json({ token }); // For API response
