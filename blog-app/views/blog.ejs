@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Blog</title>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+
+    <div class="max-w-4xl mx-auto mt-10 px-4">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-6"><%= blog.title %></h1>
+        
+        <div class="rounded-2xl overflow-hidden shadow-lg mb-8">
+            <img src="<%= blog.coverImageURL %>" class="w-full h-auto object-cover max-h-[500px]" alt="Cover" />
+        </div>
+
+        <div class="flex items-center gap-3 mb-8 pb-8 border-b border-gray-100">
+            <img src="<%= blog.createdBy.profileImageURL %>" class="w-12 h-12 rounded-full object-cover border-2 border-blue-100" />
+            <div>
+                <p class="text-sm text-gray-500 italic">Written by</p>
+                <p class="font-bold text-gray-800"><%= blog.createdBy.name %></p>
+            </div>
+        </div>
+
+        <div class="px-8 py-4 border border-gray-400 rounded-md text-lg text-gray-700 leading-relaxed whitespace-pre-wrap font-sans"><%= blog.content %>
+        </div>
+    </div>
+
+    <hr class="my-12 border-gray-200" />
+
+    <div class="max-w-4xl mx-auto mb-20 px-4">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Comments (<%= blog.comments.length %>)</h2>
+
+        <% if (locals.user) { %>
+        <form action="/blog/comment/<%= blog._id %>" method="post" class="mb-10">
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input
+                    type="text"
+                    name="content"
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    placeholder="Write a comment..."
+                    required
+                />
+                <button 
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors active:scale-95" 
+                    type="submit"
+                >
+                    Add
+                </button>
+            </div>
+        </form>
+        <% } %>
+
+        <div class="space-y-6">
+            <% blog.comments.forEach(comment => { %>
+            <div class="flex gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                <img src="<%= comment.createdBy.profileImageURL %>" class="w-10 h-10 rounded-full object-cover shrink-0" />
+                <div>
+                    <p class="font-bold text-gray-900 text-sm"><%= comment.createdBy.name %></p>
+                    <div class="mt-0.5 text-gray-700 whitespace-pre-wrap text-sm leading-snug"><%= comment.content %></div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>

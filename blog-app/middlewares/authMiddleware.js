@@ -33,4 +33,12 @@ function restrictTo(roles) {
     }
 }
 
-export { checkForAuthentication, restrictTo };
+// helper function to restrict some routes to authenticated users only
+function checkIfAuthenticated(req, res, next) {
+    if (req.user) {
+        return next();
+    }
+    res.redirect('/user/signin');
+}
+
+export { checkForAuthentication, restrictTo, checkIfAuthenticated };

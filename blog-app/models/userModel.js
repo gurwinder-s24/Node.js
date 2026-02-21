@@ -22,6 +22,10 @@ userSchema.methods.comparePassword = verifyPassword;
 
 userSchema.static('existsByEmail', existsByEmail);
 userSchema.static('matchCredentialsAndReturnUserInfo', matchCredentialsAndReturnUserInfo);
+userSchema.static('findUserInfoById', async function(id) {
+    const userInfo = await this.findById(id).select('-password');
+    return userInfo;
+});
 
 const userModel = model('User', userSchema);
 export default userModel;
