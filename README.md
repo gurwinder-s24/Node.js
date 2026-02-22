@@ -7,17 +7,14 @@
 - Stateful Authentication (using sessions and cookies)
 - Stateless Authentication (using JWT)
 - Authentication and Authorization using middlewares
+- Multipart/form-data handling for file uploads ( using multer )
 
-## Tech Stack Used
+## Tech Stack Used 
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
 - EJS templating engine
-- Argon2 for password hashing
-- JSON Web Tokens (JWT) for stateless authentication
-- Multipart/form-data handling for file uploads ( using multer )
-
 
 ## Mini-Projects and navigation links to their codes
 
@@ -31,3 +28,13 @@
   - Learned about model static methods and instance methods to return only the required fields in the response and ensuring data privacy.
   - Thin controller, Fat model pattern to control exactly what data leaves the database, it is often called a Data Access Layer (DAL) pattern or Projection. ( promote security, DRY principle, abstraction and data encapsulation )
   - Learned about Subdocuments in Mongoose to implement comments as subdocuments of blog posts. ( by using nested schema called as embedding )
+
+
+
+
+
+## Additional Concepts Learned ( not in course )
+- Password hashing using Argon2 ( a modern and secure password hashing algorithm )
+- Thin controller, Fat model pattern ( DAL pattern or Projection)
+- Mongoose Nested Schema ( embedding ) for subdocuments
+- Route protection using middlewares
