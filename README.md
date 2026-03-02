@@ -35,6 +35,6 @@
 
 ## Additional Concepts Learned ( not in course )
 - Password hashing using Argon2 ( a modern and secure password hashing algorithm )
-- Thin controller, Fat model pattern ( DAL pattern or Projection)
+- Thin controller, Fat model pattern ( DAL pattern or Projection )
 - Mongoose Nested Schema ( embedding ) for subdocuments
 - Route protection using middlewares
