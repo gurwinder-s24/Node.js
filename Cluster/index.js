@@ -1,0 +1,13 @@
+const express = require('express');
+
+const app = express();
+const PORT = 5000;
+
+
+app.get('/', (req, res) => {
+    return res.json({ message: `Process is running ${process.pid}` });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
