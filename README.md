@@ -8,6 +8,8 @@
 - Stateless Authentication (using JWT)
 - Authentication and Authorization using middlewares
 - Multipart/form-data handling for file uploads ( using multer )
+- NGINX as a reverse proxy server and its deployment on AWS EC2
+- AWS EC2 deployment, serverless deployment using AWS Lambda and API Gateway
 
 ## Tech Stack Used 
 - Node.js

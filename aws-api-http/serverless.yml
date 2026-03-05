@@ -1,0 +1,21 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: gurwinder24s
+# "app" is the name of the app you want to use for this service. This will also be added to your AWS resource names.
+app: aws-api-http
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: aws-api-http
+
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-south-1
+
+functions:
+  hello:
+    handler: hello.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
