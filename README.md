@@ -10,12 +10,15 @@
 - Multipart/form-data handling for file uploads ( using multer )
 - NGINX as a reverse proxy server and its deployment on AWS EC2
 - AWS EC2 deployment, serverless deployment using AWS Lambda and API Gateway
+- PostgreSQL database integration using Prisma ORM
 
 ## Tech Stack Used 
 - Node.js
 - Express.js
 - MongoDB
-- Mongoose
+- Mongoose ODM
+- PostgreSQL
+- Prisma ORM
 - EJS templating engine
 
 ## Mini-Projects and navigation links to their codes
