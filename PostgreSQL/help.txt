@@ -1,0 +1,75 @@
+Docker commands
+
+# Build the Docker image
+docker compose up -d
+
+# Stop the Docker container
+docker compose down
+
+# View all running Docker containers\
+docker ps
+
+# Open Interactive terminal in the running container
+docker exec -it <container_id> bash
+
+
+
+======================================
+Commands after opening interactive terminal in the running container
+
+# View all running processes in the container
+ps -aux
+
+# View all environment variables in the container
+printenv
+
+{
+    # run only if you set POSTGRES_USER=postgres in docker file i.e. if container user and database user is same
+    su postgres
+    psql
+    \c threads_db
+
+    # do not run otherwise, like in this case we have set POSTGRES_USER: prisma i.e. bypass authentication
+    psql -U prisma -d threads_db
+
+    # if above also not work
+    psql -h localhost -p 5432 -U prisma -d threads_db
+}
+
+
+
+======================================
+Commands after entering psql terminal
+
+# View all relations in the database
+\d
+
+# View all tables in the database
+\dt
+
+# View all columns in a specific table
+\dt <table_name>
+
+# View the schema of a specific table
+\d <table_name>
+
+# View all data in a specific table
+select * from <table_name>;
+
+# Delete all data from a specific table
+delete from <table_name> where true;
+
+
+
+=======================================
+# To run the server at the latest code changes
+    {
+        docker compose down
+        - delete the volume in docker if you want to reset the database
+        docker compose up -d
+        npm run generate
+        - delete the migrations folder
+        npm run migrate-reset
+        npm run migrate
+        npm run dev
+    }
